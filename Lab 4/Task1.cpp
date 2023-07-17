@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+class heapcls
+{
+    int *arr;
+    int size;
+
+public:
+    heapcls(int n, int *arrin)
+    {
+        size = n;
+        arr = arrin;
+    }
+    void heapify_down(int n)
+    {
+        int largest = n;
+        int leftChild = 2 * n + 1;
+        int rightChild = 2 * n + 2;
+        if (leftChild < size && arr[leftChild] > arr[n])
+            largest = leftChild;
+        if (rightChild <= size && arr[rightChild] > arr[n])
+            largest = rightChild;
+        if (largest != n)
+        {
+            cout << n << " " << largest << endl;
+            swap(arr[n], arr[largest]);
+            heapify_down(largest);
+        }
+        return;
+    }
+    void heap_sort()
+    {
+        if (size == 1)
+            return;
+        swap(arr[0], arr[size]);
+        size--;
+        heapify_down(0);
+        heap_sort();
+        return;
+    }
+    void build_max_heap()
+    {
+        for (int i = size / 2; i >= 0; i--)
+            heapify_down(i);
+        heapify_down(0);
+    }
+};
+
+int main()
+{
+    int i, n;
+    int x = 0, t, inp, sum = 0;
+    int arr[] = {5, 6, 4, 3, 1, 61, 43, 15, 33, 53};
+    heapcls heap1(10, arr);
+    heap1.build_max_heap();
+
+    for (i = 0; i < 10; i++)
+        cout << arr[i] << " ";
+}
